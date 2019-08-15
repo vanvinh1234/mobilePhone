@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile</title>
+</head>
+<body>
+<script>
+    let Mobile = function (name) {
+        this.name = name;
+        this.battery= 100;
+        this.message = "";
+        this.inbox = [];
+        this.outbox =[];
+        this.status = false;
+        this.checkStatus = function () {
+            if(this.status){
+              console.log("Turn on!");
+            }else{
+                console.log("Turn off!");
+            }
+        };
+        this.turnOn = function () {
+            this.status = true;
+        };
+        this.turnOff = function () {
+            this.status = false;
+        };
+        this.writeMessage = function (message) {
+            if(this.status){
+                this.message = message
+            }
+        };
+        this.sendMessage = function (phone) {
+            if(this.status){
+                if(this.battery>0){
+                    this.outbox.push(this.message);
+                    phone.inbox.push(this.message);
+                    this.battery--;
+                }
+            }
+        };
+        this.getInbox = function () {
+            if(this.status){
+                return this.inbox;
+            }
+        };
+        this.getOutbox = function(){
+            if(this.status){
+                return this.outbox;
+            }
+        };
+        this.getName = function () {
+            return this.name;
+        }
+    };
+    let nokia = new Mobile("nokia");
+    let iphone = new Mobile("iphone");
+    nokia.turnOn();
+    iphone.turnOn();
+    nokia.writeMessage('hello');
+    nokia.sendMessage(iphone);
+    alert(nokia.getOutbox());
+    alert(iphone.getInbox());
+</script>
+</body>
+</html>
